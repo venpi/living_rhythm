@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Counted Form vs Living Rhythm | Für Elise (Timing)</title>
+	<style>
+		:root{
+			--bg:#070a12;
+			--card:rgba(255,255,255,0.06);
+			--card2:rgba(255,255,255,0.04);
+			--text:#e8eefc;
+			--muted:rgba(232,238,252,0.72);
+			--muted2:rgba(232,238,252,0.55);
+			--stroke:rgba(255,255,255,0.10);
+			--shadow:0 24px 60px rgba(0,0,0,0.55);
+			--radius:16px;
+		}
+		body{
+			margin:0;
+			font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+			background: radial-gradient(1200px 700px at 12% 8%, rgba(110,231,255,0.12), transparent 60%),
+						radial-gradient(1000px 800px at 88% 18%, rgba(167,139,250,0.12), transparent 60%),
+						linear-gradient(180deg, #040611, var(--bg));
+			color: var(--text);
+			min-height:100vh;
+			display:flex;
+			align-items:flex-start;
+			justify-content:center;
+			padding: 28px 14px 54px 14px;
+		}
+		.container{
+			width:min(980px, 96vw);
+		}
+		header{
+			padding: 18px 18px 10px 18px;
+			border: 1px solid var(--stroke);
+			background: rgba(255,255,255,0.04);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+		}
+		h1{
+			margin:0;
+			font-size: 22px;
+			letter-spacing: 0.2px;
+		}
+		.sub{
+			margin-top: 8px;
+			color: var(--muted);
+			line-height: 1.45;
+			font-size: 14.5px;
+		}
+		
+		.quote{
+			margin-top:10px;
+			padding:10px 12px;
+			border-left:3px solid rgba(96,165,250,.55);
+			background:rgba(15,23,42,.45);
+			border-radius:12px;
+			color:rgba(229,231,235,.94);
+			font-size:14px;
+			line-height:1.45;
+		}
+		.discern{
+			margin-top:8px;
+			color:rgba(148,163,184,.92);
+			font-size:13px;
+			line-height:1.45;
+		}
+.grid{
+			margin-top: 16px;
+			display:grid;
+			grid-template-columns: 1fr;
+			gap: 14px;
+		}
+		.card{
+			border: 1px solid var(--stroke);
+			background: var(--card);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			padding: 16px 16px 14px 16px;
+		}
+		.row{
+			display:flex;
+			gap: 14px;
+			flex-wrap:wrap;
+			align-items:flex-end;
+		}
+		.field{
+			display:flex;
+			flex-direction:column;
+			gap: 6px;
+			min-width: 170px;
+		}
+		label{
+			color: var(--muted);
+			font-size: 12.5px;
+		}
+		input[type="range"]{
+			width: 260px;
+		}
+		select, button{
+			border-radius: 12px;
+			border: 1px solid rgba(255,255,255,0.14);
+			background: rgba(0,0,0,0.20);
+			color: var(--text);
+			padding: 10px 12px;
+			outline:none;
+		}
+		select{ padding: 9px 10px; }
+		button{
+			cursor:pointer;
+			transition: transform 0.05s ease, background 0.12s ease, border-color 0.12s ease;
+			user-select:none;
+		}
+		button:hover{ background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); }
+		button:active{ transform: translateY(1px); }
+		button.secondary{
+			background: rgba(255,255,255,0.05);
+		}
+		.btnrow{
+			display:flex;
+			gap: 10px;
+			flex-wrap:wrap;
+			margin-top: 10px;
+		}
+		canvas{
+			width:100%;
+			display:block;
+			border-radius: 12px;
+			background: rgba(0,0,0,0.18);
+		}
+		#barsCanvas{ height: 220px; }
+		#rollCanvas{ height: 340px; }
+		.smallRow{
+			display:flex;
+			gap: 14px;
+			align-items:center;
+			flex-wrap:wrap;
+			margin-top: 10px;
+			color: var(--muted);
+			font-size: 12.5px;
+		}
+		.smallRow input{ transform: translateY(1px); }
+		.note{
+			margin-top: 10px;
+			color: var(--muted2);
+			font-size: 12.5px;
+			line-height: 1.45;
+		}
+		.k{
+			font-variant-numeric: tabular-nums;
+			padding: 2px 8px;
+			border-radius: 999px;
+			border: 1px solid rgba(255,255,255,0.12);
+			background: rgba(0,0,0,0.18);
+		}
+		.splitHead{
+			display:flex;
+			justify-content:space-between;
+			align-items:center;
+			gap: 10px;
+			margin-bottom: 10px;
+		}
+		.titleSmall{
+			font-size: 12.5px;
+			letter-spacing: 0.7px;
+			text-transform: uppercase;
+			color: rgba(232,238,252,0.82);
+		}
+		.mini{
+			font-size: 12.5px;
+			color: var(--muted);
+		}
+		.footer{
+			margin-top: 16px;
+			color: rgba(232,238,252,0.55);
+			font-size: 12.5px;
+			line-height: 1.45;
+			padding: 0 2px;
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+		}
+		.signature{
+			height: 44px;
+			opacity: 0.55;
+			transition: opacity 0.2s ease;
+		}
+		.signature:hover{
+			opacity: 0.85;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>Don't Count the Shape. Listen for the Living.</h1>
+			<div class="sub">Same notes. Two ways of moving through them.</div>
+		</header>
+
+		<div class="grid">
+			<div class="card">
+				<div class="row">
+					<div class="field">
+						<label>Tempo (BPM): <span class="k" id="bpmLabel">82</span></label>
+						<input id="tempo" type="range" min="60" max="180" value="82" />
+					</div>
+
+					<div class="field">
+						<label>Transpose (root note)</label>
+						<select id="root">
+							<option value="A4" selected>A4 (original-ish)</option>
+							<option value="G4">G4</option>
+							<option value="F4">F4</option>
+							<option value="C4">C4</option>
+							<option value="D4">D4</option>
+							<option value="E4">E4</option>
+						</select>
+					</div>
+
+					<div class="field">
+						<label>Even step (Chronos)</label>
+						<select id="evenStep">
+							<option value="0.25">Sixteenth (0.25 beat)</option>
+							<option value="0.5" selected>Eighth (0.5 beat)</option>
+							<option value="1.0">Quarter (1.0 beat)</option>
+						</select>
+					</div>
+
+					<div class="field">
+						<label>Grouping (for colors)</label>
+						<select id="grouping">
+							<option value="measures">Measures (3/8 bars)</option>
+							<option value="phrases" selected>Phrases (rests + landings)</option>
+						</select>
+					</div>
+
+					<div class="field">
+						<label>Color mode</label>
+						<select id="colorMode">
+							<option value="off">Off (lane colors)</option>
+							<option value="cycle8">Cycle of 8 (by note order)</option>
+							<option value="pitch" selected>By pitch (heat)</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="btnrow">
+					<button id="playChronos">Play counted timing (grid)</button>
+					<button id="playKairos">Play notated timing (score)</button>
+					<button id="stop" class="secondary">Stop</button>
+				</div>
+
+				<div class="smallRow">
+										<label><input type="checkbox" id="unfold" checked /> Unfold piano roll during playback</label>
+					<label><input type="checkbox" id="showTicks" checked /> Show second ticks</label>
+					<label><input type="checkbox" id="showEnds" checked /> Show duration markers</label>
+					<label><input type="checkbox" id="showBarlines" checked /> Show barlines</label>
+					<button id="revealBoth" class="secondary">Reveal both piano rolls</button>
+					<span id="durReadout" class="mini"></span>
+				</div>
+
+				<div class="note">
+					Tip: If Chronos feels "too musical," pick a smaller even step (sixteenths).
+					If Kairos feels too fast, lower BPM. No copyrighted audio recording is used.
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="splitHead">
+					<div class="titleSmall">NOTE BLOCKS</div>
+					<div class="mini">time (x) vs pitch (y), bar width = duration</div>
+				</div>
+				<canvas id="barsCanvas"></canvas>
+			</div>
+
+			<div class="card">
+				<div class="splitHead">
+					<div class="titleSmall">PIANO ROLL</div>
+					<div class="mini">time (x) vs pitch (y)</div>
+				</div>
+				<canvas id="rollCanvas"></canvas>
+			</div>
+		</div>
+
+		<div class="footer">
+			<span>Chronos measures. Kairos moves. The difference isn't in the notes—it's in the living.</span>
+			<img class="signature" src="data:image/png;base64,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" alt="Y" />
+		</div>
+	</div>
+
+	<script>
+		// -----------------------------
+		// Simplified "Für Elise" opening: A-section gesture + response, repeated to exceed ~10s.
+		// Each event: {note: 'E5' or null for rest, b: duration in quarter-note beats}
+		// -----------------------------
+		
+		// Each event: {note: 'E5' or null for rest, b: duration in quarter-note beats}
+		// "Kairos" here means: use the written rhythm (many 16ths in the opening), not an even grid.
+		// Note: This is still a simplified excerpt (no full two-hand notation), but the rhythm is score-faithful in spirit.
+		const KAIROS_SEQ = [
+			{note:'E5',b:0.25},{note:'D#5',b:0.25},{note:'E5',b:0.25},{note:'D#5',b:0.25},{note:'E5',b:0.25},{note:'B4',b:0.25},{note:'D5',b:0.25},{note:'C5',b:0.25},{note:'A4',b:0.50},{note:null,b:0.25},
+			{note:'C4',b:0.25},{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'B4',b:0.50},{note:null,b:0.25},{note:'E4',b:0.25},{note:'G#4',b:0.25},{note:'B4',b:0.25},{note:'C5',b:0.50},{note:null,b:0.25},
+			{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'C5',b:0.25},{note:'E5',b:0.25},{note:'D#5',b:0.25},{note:'E5',b:0.25},{note:'B4',b:0.25},{note:'D5',b:0.25},{note:'C5',b:0.25},{note:'A4',b:0.50},
+			{note:null,b:0.25},{note:'C4',b:0.25},{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'B4',b:0.50},{note:null,b:0.25},{note:'E4',b:0.25},{note:'G#4',b:0.25},{note:'B4',b:0.25},{note:'C5',b:0.50},
+			{note:null,b:0.25},{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'C5',b:0.25},{note:'E5',b:0.25},{note:'D#5',b:0.25},{note:'E5',b:0.25},{note:'B4',b:0.25},{note:'D5',b:0.25},{note:'C5',b:0.25},
+			{note:'A4',b:0.50},{note:null,b:0.25},{note:'C4',b:0.25},{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'B4',b:0.50},{note:null,b:0.25},{note:'E4',b:0.25},{note:'G#4',b:0.25},{note:'B4',b:0.25},
+			{note:'C5',b:0.50},{note:null,b:0.25},{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'C5',b:0.25},{note:'E5',b:0.25},{note:'D#5',b:0.25},{note:'E5',b:0.25},{note:'B4',b:0.25},{note:'D5',b:0.25},
+			{note:'C5',b:0.25},{note:'A4',b:0.50},{note:null,b:0.25},{note:'C4',b:0.25},{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'B4',b:0.50},{note:null,b:0.25},{note:'E4',b:0.25},{note:'G#4',b:0.25},
+			{note:'B4',b:0.25},{note:'C5',b:0.50},{note:null,b:0.25},{note:'E4',b:0.25},{note:'A4',b:0.25},{note:'C5',b:0.25}
+		];
+
+		// A very light left-hand layer (optional) to restore "piano gravity" without turning this into a full engraving engine.
+		// Each: {note, startB, b, v}
+		const KAIROS_BASS = [
+			{note:'A2',startB:0.50,b:0.25,v:0.22},{note:'E3',startB:0.75,b:0.25,v:0.18},{note:'A3',startB:1.00,b:0.25,v:0.18},{note:'E3',startB:1.25,b:0.25,v:0.18},{note:'A2',startB:1.50,b:0.25,v:0.22},{note:'E3',startB:1.75,b:0.25,v:0.18},
+			{note:'A2',startB:2.00,b:0.25,v:0.22},{note:'E3',startB:2.25,b:0.25,v:0.18},{note:'A3',startB:2.50,b:0.25,v:0.18},{note:'E3',startB:2.75,b:0.25,v:0.18},{note:'A2',startB:3.00,b:0.25,v:0.22},{note:'E3',startB:3.25,b:0.25,v:0.18},
+			{note:'E2',startB:3.50,b:0.25,v:0.22},{note:'B2',startB:3.75,b:0.25,v:0.22},{note:'E3',startB:4.00,b:0.25,v:0.18},{note:'B2',startB:4.25,b:0.25,v:0.22},{note:'E2',startB:4.50,b:0.25,v:0.22},{note:'B2',startB:4.75,b:0.25,v:0.22},
+			{note:'A2',startB:5.00,b:0.25,v:0.22},{note:'E3',startB:5.25,b:0.25,v:0.18},{note:'A3',startB:5.50,b:0.25,v:0.18},{note:'E3',startB:5.75,b:0.25,v:0.18},{note:'A2',startB:6.00,b:0.25,v:0.22},{note:'E3',startB:6.25,b:0.25,v:0.18},
+			{note:'A2',startB:6.50,b:0.25,v:0.22},{note:'E3',startB:6.75,b:0.25,v:0.18},{note:'A3',startB:7.00,b:0.25,v:0.18},{note:'E3',startB:7.25,b:0.25,v:0.18},{note:'A2',startB:7.50,b:0.25,v:0.22},{note:'E3',startB:7.75,b:0.25,v:0.18},
+			{note:'A2',startB:8.00,b:0.25,v:0.22},{note:'E3',startB:8.25,b:0.25,v:0.18},{note:'A3',startB:8.50,b:0.25,v:0.18},{note:'E3',startB:8.75,b:0.25,v:0.18},{note:'A2',startB:9.00,b:0.25,v:0.22},{note:'E3',startB:9.25,b:0.25,v:0.18},
+			{note:'E2',startB:9.50,b:0.25,v:0.22},{note:'B2',startB:9.75,b:0.25,v:0.22},{note:'E3',startB:10.00,b:0.25,v:0.18},{note:'B2',startB:10.25,b:0.25,v:0.22},{note:'E2',startB:10.50,b:0.25,v:0.22},{note:'B2',startB:10.75,b:0.25,v:0.22},
+			{note:'A2',startB:11.00,b:0.25,v:0.22},{note:'E3',startB:11.25,b:0.25,v:0.18},{note:'A3',startB:11.50,b:0.25,v:0.18},{note:'E3',startB:11.75,b:0.25,v:0.18},{note:'A2',startB:12.00,b:0.25,v:0.22},{note:'E3',startB:12.25,b:0.25,v:0.18},
+			{note:'A2',startB:12.50,b:0.25,v:0.22},{note:'E3',startB:12.75,b:0.25,v:0.18},{note:'A3',startB:13.00,b:0.25,v:0.18},{note:'E3',startB:13.25,b:0.25,v:0.18},{note:'A2',startB:13.50,b:0.25,v:0.22},{note:'E3',startB:13.75,b:0.25,v:0.18},
+			{note:'A2',startB:14.00,b:0.25,v:0.22},{note:'E3',startB:14.25,b:0.25,v:0.18},{note:'A3',startB:14.50,b:0.25,v:0.18},{note:'E3',startB:14.75,b:0.25,v:0.18},{note:'A2',startB:15.00,b:0.25,v:0.22},{note:'E3',startB:15.25,b:0.25,v:0.18},
+			{note:'E2',startB:15.50,b:0.25,v:0.22},{note:'B2',startB:15.75,b:0.25,v:0.22},{note:'E3',startB:16.00,b:0.25,v:0.18},{note:'B2',startB:16.25,b:0.25,v:0.22},{note:'E2',startB:16.50,b:0.25,v:0.22},{note:'B2',startB:16.75,b:0.25,v:0.22},
+			{note:'A2',startB:17.00,b:0.25,v:0.22},{note:'E3',startB:17.25,b:0.25,v:0.18},{note:'A3',startB:17.50,b:0.25,v:0.18},{note:'E3',startB:17.75,b:0.25,v:0.18},{note:'A2',startB:18.00,b:0.25,v:0.22},{note:'E3',startB:18.25,b:0.25,v:0.18},
+			{note:'A2',startB:18.50,b:0.25,v:0.22},{note:'E3',startB:18.75,b:0.25,v:0.18},{note:'A3',startB:19.00,b:0.25,v:0.18},{note:'E3',startB:19.25,b:0.25,v:0.18},{note:'A2',startB:19.50,b:0.25,v:0.22},{note:'E3',startB:19.75,b:0.25,v:0.18},
+			{note:'A2',startB:20.00,b:0.25,v:0.22},{note:'E3',startB:20.25,b:0.25,v:0.18},{note:'A3',startB:20.50,b:0.25,v:0.18},{note:'E3',startB:20.75,b:0.25,v:0.18},{note:'A2',startB:21.00,b:0.25,v:0.22},{note:'E3',startB:21.25,b:0.25,v:0.18},
+			{note:'E2',startB:21.50,b:0.25,v:0.22},{note:'B2',startB:21.75,b:0.25,v:0.22},{note:'E3',startB:22.00,b:0.25,v:0.18},{note:'B2',startB:22.25,b:0.25,v:0.22},{note:'E2',startB:22.50,b:0.25,v:0.22},{note:'B2',startB:22.75,b:0.25,v:0.22},
+			{note:'A2',startB:23.00,b:0.25,v:0.22},{note:'E3',startB:23.25,b:0.25,v:0.18},{note:'A3',startB:23.50,b:0.25,v:0.18},{note:'E3',startB:23.75,b:0.25,v:0.18},{note:'A2',startB:24.00,b:0.25,v:0.22},{note:'E3',startB:24.25,b:0.25,v:0.18}
+		];
+
+
+		// -----------------------------
+		// Musical grouping for coloring (Cycle of 8 resets per group)
+		// - measures: 3/8 bars => 1.5 beats (since b is in quarter-note beats)
+		// - phrases: increment at rests and "landings" (longer holds)
+		// Returns arrays aligned with the original KAIROS_SEQ indices.
+		// -----------------------------
+		function computeGroupingMaps(seq, groupingMode){
+			const barLen = 1.5; // beats per 3/8 bar
+			const groupIndex = new Array(seq.length).fill(0);
+
+			let g = 0;
+			let acc = 0;
+
+			if(groupingMode === 'measures'){
+				for(let i=0;i<seq.length;i++){
+					groupIndex[i] = g;
+					acc += seq[i].b;
+					while(acc >= barLen){
+						g += 1;
+						acc -= barLen;
+					}
+				}
+			}else{
+				// phrases
+				for(let i=0;i<seq.length;i++){
+					groupIndex[i] = g;
+					const ev = seq[i];
+					const landing = (ev.note !== null && ev.b >= 1.25); // heuristic "landing/hold"
+					const boundary = (ev.note === null) || landing;
+					if(boundary) g += 1;
+				}
+			}
+
+			// cyclePos: 0..7 for notes; -1 for rests; resets within each group
+			const cyclePos = new Array(seq.length).fill(-1);
+			const noteCountInGroup = new Map();
+			for(let i=0;i<seq.length;i++){
+				const gi = groupIndex[i];
+				if(!noteCountInGroup.has(gi)) noteCountInGroup.set(gi, 0);
+				if(seq[i].note !== null){
+					const n = noteCountInGroup.get(gi);
+					cyclePos[i] = n % 8;
+					noteCountInGroup.set(gi, n+1);
+				}
+			}
+
+			return { groupIndex, cyclePos };
+		}
+
+		function computeBarlineTimes(seq, bpm){
+			// Barline times based on 3/8 bars (1.5 beats) using the original Score rhythm.
+			const barLen = 1.5;
+			const times = [];
+			let beatAcc = 0;
+			let tBeat = 0;
+
+			for(let i=0;i<seq.length;i++){
+				beatAcc += seq[i].b;
+				tBeat += seq[i].b;
+				while(beatAcc >= barLen){
+					// bar boundary occurs "barLen" beats ago relative to current accumulation
+					const over = beatAcc - barLen;
+					const boundaryBeat = tBeat - over;
+					times.push(beatsToSeconds(boundaryBeat, bpm));
+					beatAcc -= barLen;
+				}
+			}
+			return times;
+		}
+
+		function makeChronosFromNotes(seq, evenBeat){
+			return seq.map(ev => ({ note: ev.note, b: evenBeat }));
+		}
+
+		// Audio
+		let audioCtx = null;
+		let master = null;
+		let ambDelay = null;
+		let ambFb = null;
+		let ambWet = null;
+		let noiseBuf = null;
+
+		function ensureAudio(){
+			if(audioCtx) return;
+			audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+			// Master (dry)
+			master = audioCtx.createGain();
+			master.gain.value = 0.18;
+			master.connect(audioCtx.destination);
+
+			// Tiny ambience (simple feedback delay, not an audio recording)
+			ambDelay = audioCtx.createDelay(0.35);
+			ambDelay.delayTime.value = 0.16;
+
+			ambFb = audioCtx.createGain();
+			ambFb.gain.value = 0.22;
+
+			ambWet = audioCtx.createGain();
+			ambWet.gain.value = 0.10;
+
+			ambDelay.connect(ambFb);
+			ambFb.connect(ambDelay);
+			ambDelay.connect(ambWet);
+			ambWet.connect(audioCtx.destination);
+
+			// Send the dry bus into the ambience (subtle)
+			master.connect(ambDelay);
+		}
+
+		// State
+		const playState = {
+			mode: null, // 'chronos' | 'kairos'
+			startedAt: 0,
+			schedule: [], // {t0, t1, note}
+			stopFns: [],
+			fullView: false
+		};
+
+		// Note helpers
+		const NOTE_TO_SEMI = {
+			'C':0,'C#':1,'Db':1,'D':2,'D#':3,'Eb':3,'E':4,'F':5,'F#':6,'Gb':6,'G':7,'G#':8,'Ab':8,'A':9,'A#':10,'Bb':10,'B':11
+		};
+
+		function noteToMidi(n){
+			// 'C4', 'D#5', 'Bb3'
+			const m = n.match(/^([A-G])([b#]?)(\d)$/);
+			if(!m) return 60;
+			const letter = m[1];
+			const acc = m[2] || '';
+			const oct = parseInt(m[3],10);
+			const key = letter + acc;
+			return 12*(oct+1) + NOTE_TO_SEMI[key];
+		}
+
+		function midiToFreq(midi){
+			return 440 * Math.pow(2, (midi - 69)/12);
+		}
+
+		function transposeSemisFromRoot(){
+			// Our melody is roughly anchored around A4. This lets you transpose for fun.
+			const root = document.getElementById('root').value;
+			return noteToMidi(root) - noteToMidi('A4');
+		}
+
+		
+		function getNoiseBuffer(){
+			if(noiseBuf) return noiseBuf;
+			const sr = audioCtx.sampleRate;
+			const len = Math.floor(sr * 0.08); // 80ms
+			const buf = audioCtx.createBuffer(1, len, sr);
+			const data = buf.getChannelData(0);
+			for(let i=0;i<len;i++){
+				// slightly pink-ish by smoothing
+				const white = (Math.random()*2 - 1);
+				data[i] = white * (1 - i/len);
+			}
+			noiseBuf = buf;
+			return noiseBuf;
+		}
+
+		// Simple "piano-ish" voice: triangle + lowpass transient + tiny noise click
+		function playPianoNote(midi, start, durSlot, vel, mode){
+			const freq = midiToFreq(midi);
+
+			const gate = (mode === 'kairos')
+				? (durSlot < 0.16 ? 0.62 : (durSlot < 0.28 ? 0.72 : 0.84))
+				: 0.88;
+
+			const durAud = Math.max(0.04, durSlot * gate);
+			const endAud = start + durAud;
+
+			// Oscillator
+			const osc = audioCtx.createOscillator();
+			osc.type = 'triangle';
+			osc.frequency.setValueAtTime(freq, start);
+
+			// Slight detune layer (very subtle, helps remove "beep")
+			const osc2 = audioCtx.createOscillator();
+			osc2.type = 'triangle';
+			osc2.frequency.setValueAtTime(freq * 2, start); // octave shimmer
+			osc2.detune.setValueAtTime(-6, start);
+
+			// Filter (bright attack -> warmer body)
+			const f = audioCtx.createBiquadFilter();
+			f.type = 'lowpass';
+			f.Q.value = 0.7;
+
+			const cutAttack = Math.min(7000, 900 + freq * 2.4);
+			const cutBody   = Math.min(2400, 450 + freq * 1.1);
+			f.frequency.setValueAtTime(cutAttack, start);
+			f.frequency.exponentialRampToValueAtTime(cutBody, start + Math.min(0.10, durAud*0.65));
+
+			// Gain envelope
+			const g = audioCtx.createGain();
+			const peak = Math.min(0.85, 0.55 + vel);
+			const sustain = Math.max(0.10, 0.18 + vel*0.22);
+
+			g.gain.setValueAtTime(0.0001, start);
+			g.gain.exponentialRampToValueAtTime(peak, start + 0.006);
+			g.gain.exponentialRampToValueAtTime(sustain, start + Math.min(0.08, durAud*0.55));
+			g.gain.exponentialRampToValueAtTime(0.0001, endAud + 0.08);
+
+			// Noise click for attack (tiny)
+			const nb = getNoiseBuffer();
+			const n = audioCtx.createBufferSource();
+			n.buffer = nb;
+			const ng = audioCtx.createGain();
+			ng.gain.setValueAtTime(0.0001, start);
+			ng.gain.exponentialRampToValueAtTime(0.06 + vel*0.04, start + 0.003);
+			ng.gain.exponentialRampToValueAtTime(0.0001, start + 0.02);
+
+			// Routing
+			osc.connect(f);
+			osc2.connect(f);
+			f.connect(g);
+			g.connect(master);
+
+			n.connect(ng);
+			ng.connect(master);
+
+			osc.start(start);
+			osc2.start(start);
+			n.start(start);
+
+			osc.stop(endAud + 0.10);
+			osc2.stop(endAud + 0.10);
+			n.stop(start + 0.04);
+
+			// Return stop function for emergency stop
+			return () => {
+				try{ osc.stop(); }catch(e){}
+				try{ osc2.stop(); }catch(e){}
+				try{ n.stop(); }catch(e){}
+				[osc,osc2,n,f,g,ng].forEach(node => { try{ node.disconnect(); }catch(e){} });
+			};
+		}
+
+		function scheduleOverlay(events, bpm, t0, mode){
+			const trans = transposeSemisFromRoot();
+			events.forEach(ev => {
+				const start = t0 + beatsToSeconds(ev.startB, bpm);
+				const durSlot = beatsToSeconds(ev.b, bpm);
+				const midi = noteToMidi(ev.note) + trans;
+				const stopFn = playPianoNote(midi, start, durSlot, ev.v ?? 0.18, mode);
+				playState.stopFns.push(stopFn);
+			});
+		}
+
+function beatsToSeconds(beats, bpm){
+			return (60 / bpm) * beats;
+		}
+
+		function totalSeconds(seq, bpm){
+			let beats = 0;
+			seq.forEach(ev => beats += ev.b);
+			return beatsToSeconds(beats, bpm);
+		}
+
+		function scheduleSequence(seq, bpm, when, mode){
+			ensureAudio();
+			const t0 = when ?? (audioCtx.currentTime + 0.02);
+			const trans = transposeSemisFromRoot();
+
+			playState.schedule = [];
+			playState.stopFns = [];
+
+			let tBeat = 0;
+			seq.forEach(ev => {
+				const start = t0 + beatsToSeconds(tBeat, bpm);
+				const durSlot = beatsToSeconds(ev.b, bpm);
+				const end = start + durSlot;
+				playState.schedule.push({ t0: start, t1: end, note: ev.note });
+
+				if(ev.note !== null){
+					const midi = noteToMidi(ev.note) + trans;
+					const vel = (mode === 'kairos') ? 0.30 : 0.24;
+					const stopFn = playPianoNote(midi, start, durSlot, vel, mode);
+					playState.stopFns.push(stopFn);
+				}
+
+				tBeat += ev.b;
+			});
+
+			playState.startedAt = t0;
+		}
+
+
+		function stopPlayback(){
+			if(!audioCtx) return;
+			playState.stopFns.forEach(fn => fn());
+			playState.stopFns = [];
+			playState.schedule = [];
+			playState.mode = null;
+		}
+
+		// -----------------------------
+		// Visuals
+		// -----------------------------
+		const barsCanvas = document.getElementById('barsCanvas');
+		const rollCanvas = document.getElementById('rollCanvas');
+		const barsCtx = barsCanvas.getContext('2d');
+		const rollCtx = rollCanvas.getContext('2d');
+
+		function resizeCanvasToDisplaySize(canvas){
+			const dpr = window.devicePixelRatio || 1;
+			const rect = canvas.getBoundingClientRect();
+			const w = Math.round(rect.width * dpr);
+			const h = Math.round(rect.height * dpr);
+			if(canvas.width !== w || canvas.height !== h){
+				canvas.width = w;
+				canvas.height = h;
+			}
+		}
+
+		function activeIndexForSeq(seq, bpm, tRel){
+			// returns index of active note event at time tRel (seconds), based on seq durations
+			let tBeat = 0;
+			for(let i=0;i<seq.length;i++){
+				const t0 = beatsToSeconds(tBeat, bpm);
+				const t1 = beatsToSeconds(tBeat + seq[i].b, bpm);
+				if(tRel >= t0 && tRel < t1) return i;
+				tBeat += seq[i].b;
+			}
+			return -1;
+		}
+		// Color modes for the roll + blocks
+		const CYCLE8_HUES = [200, 220, 245, 270, 295, 320, 345, 20];
+
+		function cycle8Color(idx, alpha){
+			const h = CYCLE8_HUES[idx % 8];
+			return `hsla(${h}, 85%, 60%, ${alpha})`;
+		}
+
+		function pitchHeatColor(midi, minM, maxM, alpha){
+			const span = Math.max(1, (maxM - minM));
+			const t = Math.min(1, Math.max(0, (midi - minM) / span));
+			const hue = 200 + 140 * t; // blue -> magenta
+			return `hsla(${hue.toFixed(1)}, 85%, 60%, ${alpha})`;
+		}
+
+		function resolveColor(colorMode, cycleIndex, midi, minM, maxM, alpha, fallback){
+			if(colorMode === 'cycle8') return cycle8Color(cycleIndex < 0 ? 0 : cycleIndex, alpha);
+			if(colorMode === 'pitch') return pitchHeatColor(midi, minM, maxM, alpha);
+			return fallback;
+		}
+
+
+		function drawBars(seq, bpm, opts){
+			resizeCanvasToDisplaySize(barsCanvas);
+			const ctx = barsCtx;
+			const W = barsCanvas.width;
+			const H = barsCanvas.height;
+
+			ctx.clearRect(0,0,W,H);
+			ctx.fillStyle = 'rgba(0,0,0,0.16)';
+			ctx.fillRect(0,0,W,H);
+
+			const pad = 18 * (window.devicePixelRatio||1);
+			const innerW = W - 2*pad;
+			const innerH = H - 2*pad;
+
+			const notes = seq.filter(e => e.note !== null).map(e => noteToMidi(e.note) + transposeSemisFromRoot());
+			const minM = Math.min(...notes) - 2;
+			const maxM = Math.max(...notes) + 2;
+
+			const maxDur = totalSeconds(seq, bpm);
+
+			const colorMode = (opts && opts.colorMode) ? opts.colorMode : 'off';
+
+			const groupingMode = document.getElementById('grouping').value;
+			const maps = computeGroupingMaps(KAIROS_SEQ, groupingMode);
+			const cyclePos = maps.cyclePos;
+
+			function yForMidi(m){
+				const t = (m - minM) / Math.max(1,(maxM - minM));
+				return pad + innerH - t*innerH;
+			}
+
+			// grid
+			ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+			ctx.lineWidth = 1;
+			for(let m = Math.ceil(minM/12)*12; m <= maxM; m += 12){
+				const y = yForMidi(m);
+				ctx.beginPath();
+				ctx.moveTo(pad, y);
+				ctx.lineTo(pad+innerW, y);
+				ctx.stroke();
+			}
+
+			// active marker
+			let tRel = 0;
+			let activeIdx = -1;
+			if(audioCtx && playState.schedule.length){
+				tRel = Math.max(0, audioCtx.currentTime - playState.startedAt);
+				activeIdx = activeIndexForSeq(seq, bpm, tRel);
+			}
+
+			let tBeat = 0;
+			// cyclePos is aligned to the original Score sequence indices
+			let noteOrdinal = -1;
+			seq.forEach((ev, i) => {
+				const t0 = beatsToSeconds(tBeat, bpm);
+				const t1 = beatsToSeconds(tBeat + ev.b, bpm);
+				const x0 = pad + (t0 / maxDur) * innerW;
+				const w = ((t1 - t0) / maxDur) * innerW;
+
+				if(ev.note === null){
+					ctx.fillStyle = 'rgba(255,255,255,0.04)';
+					ctx.fillRect(x0, pad + innerH + 2, Math.max(1,w), 3*(window.devicePixelRatio||1));
+					tBeat += ev.b;
+					return;
+				}
+
+				const midi = noteToMidi(ev.note) + transposeSemisFromRoot();
+				const y = yForMidi(midi);
+				const h = Math.max(10*(window.devicePixelRatio||1), innerH / (maxM - minM + 1) * 0.95);
+
+				noteOrdinal += 1;
+
+				const isActive = (i === activeIdx);
+				const fallback = isActive ? 'rgba(110,231,255,0.65)' : 'rgba(110,231,255,0.22)';
+				ctx.fillStyle = resolveColor(colorMode, cyclePos[i], midi, minM, maxM, isActive ? 0.86 : 0.32, fallback);
+				ctx.fillRect(x0, y - h/2, Math.max(1,w), h);
+				if(isActive && colorMode !== 'off'){
+					ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+					ctx.lineWidth = 1.2*(window.devicePixelRatio||1);
+					ctx.strokeRect(x0, y - h/2, Math.max(1,w), h);
+				}
+
+				tBeat += ev.b;
+			});
+
+			// cursor
+			if(audioCtx && playState.schedule.length){
+				const x = pad + (Math.min(tRel, maxDur) / maxDur) * innerW;
+				ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+				ctx.beginPath();
+				ctx.moveTo(x, pad);
+				ctx.lineTo(x, pad + innerH);
+				ctx.stroke();
+			}
+
+			ctx.fillStyle = 'rgba(232,238,252,0.72)';
+			ctx.font = `${12*(window.devicePixelRatio||1)}px system-ui, sans-serif`;
+			ctx.fillText(`Active: ${playState.mode ? playState.mode : '"”'} (bars show current mode)`, pad, pad - 6*(window.devicePixelRatio||1));
+		}
+
+		function drawPianoRoll(seqChronos, seqKairos, bpm, opts){
+			resizeCanvasToDisplaySize(rollCanvas);
+			const ctx = rollCtx;
+			const W = rollCanvas.width;
+			const H = rollCanvas.height;
+
+			ctx.clearRect(0,0,W,H);
+			ctx.fillStyle = 'rgba(0,0,0,0.16)';
+			ctx.fillRect(0,0,W,H);
+
+			const dpr = (window.devicePixelRatio||1);
+			const pad = 18 * dpr;
+			const innerW = W - 2*pad;
+			const innerH = H - 2*pad;
+
+			const showBoth = true; // always stacked lanes now
+			const gap = 14 * dpr;
+			const laneH = showBoth ? (innerH - gap) / 2 : innerH;
+
+			const notesAll = []
+				.concat(seqChronos.filter(e => e.note !== null).map(e => noteToMidi(e.note) + transposeSemisFromRoot()))
+				.concat(seqKairos.filter(e => e.note !== null).map(e => noteToMidi(e.note) + transposeSemisFromRoot()));
+			const minM = Math.min(...notesAll) - 2;
+			const maxM = Math.max(...notesAll) + 2;
+
+			const durC = totalSeconds(seqChronos, bpm);
+			const durK = totalSeconds(seqKairos, bpm);
+			const maxDur = Math.max(durC, durK);
+
+			opts = Object.assign({unfold:true, colorMode:'off', showTicks:true, showEnds:true}, opts || {});
+
+						const groupingMode = document.getElementById('grouping').value;
+			const maps = computeGroupingMaps(KAIROS_SEQ, groupingMode);
+			const cyclePos = maps.cyclePos;
+
+			const showBarlines = document.getElementById('showBarlines').checked;
+			const barlineTimes = (groupingMode === 'measures') ? computeBarlineTimes(KAIROS_SEQ, bpm) : [];
+
+			let tRel = 0;
+			if(audioCtx && playState.schedule.length){
+				tRel = Math.max(0, audioCtx.currentTime - playState.startedAt);
+			}
+
+			function yForMidiInLane(m, laneTop){
+				const t = (m - minM) / Math.max(1,(maxM - minM));
+				return laneTop + laneH - t*laneH;
+			}
+
+			// grid lines (octaves) in both lanes
+			ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+			ctx.lineWidth = 1;
+			for(let m = Math.ceil(minM/12)*12; m <= maxM; m += 12){
+				const y1 = yForMidiInLane(m, pad);
+				const y2 = yForMidiInLane(m, pad + laneH + gap);
+				ctx.beginPath();
+				ctx.moveTo(pad, y1);
+				ctx.lineTo(pad+innerW, y1);
+				ctx.stroke();
+				ctx.beginPath();
+				ctx.moveTo(pad, y2);
+				ctx.lineTo(pad+innerW, y2);
+				ctx.stroke();
+			}
+
+			// Time ticks (seconds) across the full comparison width
+			if(opts.showTicks){
+				const axisY = pad + innerH;
+				const major = Math.ceil(maxDur);
+				ctx.font = `${11*dpr}px system-ui, sans-serif`;
+				ctx.textAlign = 'center';
+				ctx.textBaseline = 'top';
+
+				// light vertical guides + labels at whole seconds
+				for(let s=0; s<=major; s++){
+					const x = pad + (s / maxDur) * innerW;
+					ctx.strokeStyle = 'rgba(255,255,255,0.045)';
+					ctx.beginPath();
+					ctx.moveTo(x, pad);
+					ctx.lineTo(x, pad + innerH);
+					ctx.stroke();
+
+					ctx.strokeStyle = 'rgba(255,255,255,0.14)';
+					ctx.beginPath();
+					ctx.moveTo(x, axisY);
+					ctx.lineTo(x, axisY + 6*dpr);
+					ctx.stroke();
+
+					ctx.fillStyle = 'rgba(232,238,252,0.52)';
+					ctx.fillText(String(s), x, axisY + 8*dpr);
+				}
+
+				// half-second minor ticks
+				for(let s=0.5; s<major; s+=1){
+					const x = pad + (s / maxDur) * innerW;
+					ctx.strokeStyle = 'rgba(255,255,255,0.09)';
+					ctx.beginPath();
+					ctx.moveTo(x, axisY);
+					ctx.lineTo(x, axisY + 4*dpr);
+					ctx.stroke();
+				}
+
+				// max duration hint (right edge)
+				ctx.textAlign = 'right';
+				ctx.fillStyle = 'rgba(232,238,252,0.55)';
+				ctx.fillText(`${maxDur.toFixed(2)}s`, pad + innerW, axisY + 8*dpr);
+				ctx.textAlign = 'center';
+			}
+
+			// Barlines (only in measure mode)
+			if(showBarlines && barlineTimes.length){
+				ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+				ctx.lineWidth = 1;
+				barlineTimes.forEach(t => {
+					const x = pad + (t / maxDur) * innerW;
+					ctx.beginPath();
+					ctx.moveTo(x, pad);
+					ctx.lineTo(x, pad + innerH);
+					ctx.stroke();
+				});
+			}
+
+						function drawSeqLane(seq, laneTop, baseFill, activeFill, modeName){
+				// Determine unfolding rule:
+				// - if fullView: draw everything
+				// - else if unfold and this is the active mode: draw only up to tRel
+				// - else: draw everything (dim) so comparison is instant
+				const unfold = opts.unfold;
+				let limit = Infinity;
+				if(!playState.fullView && unfold && playState.mode === modeName){
+					limit = tRel;
+				}
+
+				let activeIdx = -1;
+				if(audioCtx && playState.schedule.length && playState.mode === modeName){
+					activeIdx = activeIndexForSeq(seq, bpm, tRel);
+				}
+
+				let tBeat = 0;
+				let noteOrdinal = -1;
+				for(let i=0;i<seq.length;i++){
+					const ev = seq[i];
+					const t0 = beatsToSeconds(tBeat, bpm);
+					const t1 = beatsToSeconds(tBeat + ev.b, bpm);
+
+					if(t0 >= limit) break;
+
+					const clipT1 = Math.min(t1, limit);
+					const x0 = pad + (t0 / maxDur) * innerW;
+					const w  = ((clipT1 - t0) / maxDur) * innerW;
+
+					if(ev.note === null){
+						ctx.fillStyle = 'rgba(255,255,255,0.03)';
+						ctx.fillRect(x0, laneTop + laneH + 2, Math.max(1,w), 3*dpr);
+						tBeat += ev.b;
+						continue;
+					}
+
+					const midi = noteToMidi(ev.note) + transposeSemisFromRoot();
+					const y = yForMidiInLane(midi, laneTop);
+					const h = Math.max(8*dpr, laneH / (maxM - minM + 1) * 0.95);
+
+					noteOrdinal += 1;
+
+					const isActive = (i === activeIdx);
+					const fallback = isActive ? activeFill : baseFill;
+					ctx.fillStyle = resolveColor(opts.colorMode, cyclePos[i], midi, minM, maxM, isActive ? 0.88 : 0.32, fallback);
+					ctx.fillRect(x0, y - h/2, Math.max(1,w), h);
+					if(isActive && opts.colorMode !== 'off'){
+						ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+						ctx.lineWidth = 1.2*dpr;
+						ctx.strokeRect(x0, y - h/2, Math.max(1,w), h);
+					}
+
+					tBeat += ev.b;
+				}
+			}
+
+			// Lanes
+			drawSeqLane(seqChronos, pad, 'rgba(167,139,250,0.22)', 'rgba(167,139,250,0.62)', 'chronos');
+			drawSeqLane(seqKairos,  pad + laneH + gap, 'rgba(110,231,255,0.22)', 'rgba(110,231,255,0.62)', 'kairos');
+
+			// separators + labels
+			ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+			ctx.beginPath();
+			ctx.moveTo(pad, pad + laneH + gap/2);
+			ctx.lineTo(pad + innerW, pad + laneH + gap/2);
+			ctx.stroke();
+
+			ctx.fillStyle = 'rgba(232,238,252,0.75)';
+			ctx.font = `${12*dpr}px system-ui, sans-serif`;
+			ctx.fillText('Counted timing (grid)', pad, pad - 6*dpr);
+			ctx.fillText('Notated timing (score)', pad, pad + laneH + gap - 6*dpr);
+
+			// Time axis label
+			ctx.fillStyle = 'rgba(232,238,252,0.55)';
+			ctx.fillText('time (s)', pad + innerW - 52*dpr, Math.min(H - 6*dpr, pad + innerH + 24*dpr));
+			ctx.save();
+			ctx.translate(pad - 12*dpr, pad + innerH/2);
+			ctx.rotate(-Math.PI/2);
+			ctx.fillText('pitch', 0, 0);
+			ctx.restore();
+
+			// Cursor for active mode
+			if(audioCtx && playState.schedule.length){
+				const x = pad + (Math.min(tRel, maxDur) / maxDur) * innerW;
+				ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+				ctx.beginPath();
+				ctx.moveTo(x, pad);
+				ctx.lineTo(x, pad + innerH);
+				ctx.stroke();
+			}
+
+			// End markers (show different total durations)
+			if(opts.showEnds){
+				const xC = pad + (durC/maxDur)*innerW;
+				const xK = pad + (durK/maxDur)*innerW;
+
+				ctx.strokeStyle = 'rgba(167,139,250,0.38)';
+				ctx.beginPath();
+				ctx.moveTo(xC, pad);
+				ctx.lineTo(xC, pad + laneH);
+				ctx.stroke();
+
+				ctx.strokeStyle = 'rgba(110,231,255,0.38)';
+				ctx.beginPath();
+				ctx.moveTo(xK, pad + laneH + gap);
+				ctx.lineTo(xK, pad + innerH);
+				ctx.stroke();
+
+				// Labels
+				ctx.font = `${11*dpr}px system-ui, sans-serif`;
+				ctx.textAlign = 'left';
+				ctx.textBaseline = 'middle';
+
+				ctx.fillStyle = 'rgba(167,139,250,0.80)';
+				ctx.fillText(`Chronos ${durC.toFixed(2)}s`, Math.min(xC + 6*dpr, pad + innerW - 120*dpr), pad + 12*dpr);
+
+				ctx.fillStyle = 'rgba(110,231,255,0.80)';
+				ctx.fillText(`Kairos ${durK.toFixed(2)}s`, Math.min(xK + 6*dpr, pad + innerW - 110*dpr), pad + laneH + gap + 12*dpr);
+			}
+		}
+
+		function render(){
+			const bpm = parseInt(document.getElementById('tempo').value, 10);
+			document.getElementById('bpmLabel').textContent = bpm;
+
+			const evenBeat = parseFloat(document.getElementById('evenStep').value);
+			const CHRONOS_SEQ = makeChronosFromNotes(KAIROS_SEQ, evenBeat);
+
+			// Bars follow current mode (or default Kairos)
+			let barsSeq = KAIROS_SEQ;
+			if(playState.mode === 'chronos') barsSeq = CHRONOS_SEQ;
+			if(playState.mode === 'kairos') barsSeq = KAIROS_SEQ;
+
+			const colorMode = document.getElementById('colorMode').value;
+			const groupingMode = document.getElementById('grouping').value;
+			const showTicks = document.getElementById('showTicks').checked;
+			const showEnds = document.getElementById('showEnds').checked;
+
+			drawBars(barsSeq, bpm, {colorMode});
+
+			const unfold = document.getElementById('unfold').checked;
+			drawPianoRoll(CHRONOS_SEQ, KAIROS_SEQ, bpm, {unfold, colorMode, showTicks, showEnds});
+
+			const dC = totalSeconds(CHRONOS_SEQ, bpm);
+			const dK = totalSeconds(KAIROS_SEQ, bpm);
+			const v = playState.fullView ? 'Full view' : (unfold ? 'Unfolding' : 'Static view');
+			document.getElementById('durReadout').textContent =
+				`Chronos: ${dC.toFixed(2)}s • Kairos: ${dK.toFixed(2)}s • ${v} • Grouping: ${groupingMode} • Color: ${colorMode}`;
+		}
+
+		function loop(){
+			render();
+			requestAnimationFrame(loop);
+		}
+
+		// -----------------------------
+		// UI wiring
+		// -----------------------------
+		document.getElementById('tempo').addEventListener('input', () => render());
+		document.getElementById('root').addEventListener('change', () => render());
+		document.getElementById('evenStep').addEventListener('change', () => render());
+		document.getElementById('unfold').addEventListener('change', () => render());
+		document.getElementById('colorMode').addEventListener('change', () => render());
+		document.getElementById('grouping').addEventListener('change', () => render());
+		document.getElementById('showTicks').addEventListener('change', () => render());
+		document.getElementById('showEnds').addEventListener('change', () => render());
+		document.getElementById('showBarlines').addEventListener('change', () => render());
+
+		document.getElementById('revealBoth').addEventListener('click', () => {
+			playState.fullView = !playState.fullView;
+			document.getElementById('revealBoth').textContent =
+				playState.fullView ? 'Return to live/unfold view' : 'Reveal both piano rolls';
+			render();
+		});
+
+		document.getElementById('playChronos').addEventListener('click', async () => {
+			const bpm = parseInt(document.getElementById('tempo').value, 10);
+			const evenBeat = parseFloat(document.getElementById('evenStep').value);
+			const CHRONOS_SEQ = makeChronosFromNotes(KAIROS_SEQ, evenBeat);
+
+			stopPlayback();
+			playState.mode = 'chronos';
+			playState.fullView = false;
+
+			ensureAudio();
+			if(audioCtx.state === 'suspended') await audioCtx.resume();
+
+			scheduleSequence(CHRONOS_SEQ, bpm, undefined, 'chronos');
+		});
+
+		document.getElementById('playKairos').addEventListener('click', async () => {
+			const bpm = parseInt(document.getElementById('tempo').value, 10);
+
+			stopPlayback();
+			playState.mode = 'kairos';
+			playState.fullView = false;
+
+			ensureAudio();
+			if(audioCtx.state === 'suspended') await audioCtx.resume();
+
+			scheduleSequence(KAIROS_SEQ, bpm, undefined, 'kairos');
+			// optional bass layer for score timing
+			scheduleOverlay(KAIROS_BASS, bpm, playState.startedAt, 'kairos');
+		});
+
+		document.getElementById('stop').addEventListener('click', () => {
+			stopPlayback();
+		});
+
+		window.addEventListener('resize', () => render());
+
+		// Start render loop
+		loop();
+	</script>
+</body>
+</html>
